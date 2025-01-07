@@ -29,18 +29,24 @@ final class ImageLoader {
         URLSession.shared.dataTask(with: url) { data, _, error in
             if let error {
                 print("Error: \(error.localizedDescription)")
-                completion(nil)
+                DispatchQueue.main.async {
+                    completion(nil)
+                }
                 return
             }
 
             if let data,
                let image = UIImage(data: data) {
                 StorageManager.shared.saveImage(data, key: urlString)
-                completion(image)
+                DispatchQueue.main.async {
+                    completion(image)
+                }
                 print("Load image \(self.counter)")
                 self.counter += 1
             } else {
-                completion(nil)
+                DispatchQueue.main.async {
+                    completion(nil)
+                }
             }
         }.resume()
     }

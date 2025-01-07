@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class StorageManager {
+final class StorageManager {
     static let shared = StorageManager()
     private let historyKey = "searchHistory"
     private init() {}
