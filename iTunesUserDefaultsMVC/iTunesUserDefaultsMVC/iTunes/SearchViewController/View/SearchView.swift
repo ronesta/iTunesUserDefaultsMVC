@@ -9,8 +9,6 @@ import Foundation
 import UIKit
 
 final class SearchView: UIView {
-    weak var searchViewController: SearchViewController?
-
     let searchBar: UISearchBar = {
         let searchBar = UISearchBar()
         searchBar.searchBarStyle = .minimal
@@ -38,6 +36,8 @@ final class SearchView: UIView {
         return collectionView
     }()
 
+    var onSelect: ((IndexPath) -> Void)?
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupViews()
@@ -45,14 +45,6 @@ final class SearchView: UIView {
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-
-    func configureCollectionView(dataSource: UICollectionViewDataSource) {
-        collectionView.dataSource = dataSource
-    }
-
-    func configureSearchBar(delegate: UISearchBarDelegate) {
-        searchBar.delegate = delegate
     }
 
     private func setupViews() {
@@ -73,10 +65,6 @@ final class SearchView: UIView {
 // MARK: - UICollectionViewDelegate
 extension SearchView: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-
-        let albumViewController = AlbumViewController()
-        let album = searchViewController?.searchCollectionViewDataSource.albums[indexPath.item]
-        albumViewController.album = album
-        searchViewController?.navigationController?.pushViewController(albumViewController, animated: true)
+        onSelect?(indexPath)
     }
 }

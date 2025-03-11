@@ -15,9 +15,8 @@ final class SearchHistoryView: UIView {
         return tableView
     }()
 
+    var onSelect: ((IndexPath) -> Void)?
     static let id = "cell"
-
-    weak var searchHistoryViewController: SearchHistoryViewController?
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -26,10 +25,6 @@ final class SearchHistoryView: UIView {
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-
-    func configureTableView(dataSource: UITableViewDataSource) {
-        tableView.dataSource = dataSource
     }
 
     private func setupViews() {
@@ -49,17 +44,6 @@ final class SearchHistoryView: UIView {
 extension SearchHistoryView: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        guard let selectedTerm =
-                searchHistoryViewController?.searchHistoryTableViewDataSource.searchHistory[indexPath.row] else {
-            return
-        }
-        performSearch(for: selectedTerm)
-    }
-
-    func performSearch(for term: String) {
-        let searchViewController = SearchViewController()
-        searchViewController.searchView.searchBar.isHidden = true
-        searchViewController.searchAlbums(with: term)
-        searchHistoryViewController?.navigationController?.pushViewController(searchViewController, animated: true)
+        onSelect?(indexPath)
     }
 }

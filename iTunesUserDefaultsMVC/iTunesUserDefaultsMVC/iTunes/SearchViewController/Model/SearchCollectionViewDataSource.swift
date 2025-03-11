@@ -9,7 +9,13 @@ import Foundation
 import UIKit
 
 final class SearchCollectionViewDataSource: NSObject, UICollectionViewDataSource {
+    private let imageLoader: ImageLoader
+
     var albums = [Album]()
+
+    init(imageLoader: ImageLoader) {
+        self.imageLoader = imageLoader
+    }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         albums.count
@@ -27,7 +33,7 @@ final class SearchCollectionViewDataSource: NSObject, UICollectionViewDataSource
         let album = albums[indexPath.item]
         let urlString = album.artworkUrl100
 
-        ImageLoader.shared.loadImage(from: urlString) { loadedImage in
+        imageLoader.loadImage(from: urlString) { loadedImage in
             DispatchQueue.main.async {
                 guard let cell = collectionView.cellForItem(at: indexPath) as? AlbumCollectionViewCell  else {
                     return

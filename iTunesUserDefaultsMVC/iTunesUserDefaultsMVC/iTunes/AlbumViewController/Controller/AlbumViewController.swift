@@ -10,9 +10,20 @@ import UIKit
 import SnapKit
 
 final class AlbumViewController: UIViewController {
-    var album: Album?
+    private let imageLoader: ImageLoader
+    private let album: Album
 
-    lazy var albumView = AlbumView(frame: .zero)
+    private let albumView = AlbumView(frame: .zero)
+
+    init(album: Album, imageLoader: ImageLoader) {
+        self.album = album
+        self.imageLoader = imageLoader
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     override func loadView() {
         super.loadView()
@@ -25,12 +36,8 @@ final class AlbumViewController: UIViewController {
     }
 
     private func setupAlbum() {
-        guard let album else {
-            return
-        }
-
         let urlString = album.artworkUrl100
-        ImageLoader.shared.loadImage(from: urlString) { [weak self] loadedImage in
+        imageLoader.loadImage(from: urlString) { [weak self] loadedImage in
             DispatchQueue.main.async {
                 self?.albumView.albumImageView.image = loadedImage
             }

@@ -9,7 +9,6 @@ import Foundation
 import UIKit
 
 final class AlbumView: UIView {
-
     let albumImageView: UIImageView = {
         let image = UIImageView()
         image.layer.cornerRadius = 15

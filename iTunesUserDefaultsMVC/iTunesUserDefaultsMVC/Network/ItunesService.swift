@@ -7,12 +7,10 @@
 
 import Foundation
 
-final class NetworkManager {
-    static let shared = NetworkManager()
-    private init() {}
-    var counter = 1
+final class ItunesService {
+    private var counter = 1
 
-    func fetchAlbums(albumName: String, completion: @escaping (Result<[Album], Error>) -> Void) {
+    func loadAlbums(albumName: String, completion: @escaping (Result<[Album], Error>) -> Void) {
         let baseURL = "https://itunes.apple.com/search"
         let term = albumName.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
         let urlString = "\(baseURL)?term=\(term)&entity=album&attribute=albumTerm"
@@ -44,9 +42,9 @@ final class NetworkManager {
                 let albums = try JSONDecoder().decode(PostAlbums.self, from: data).results
                 DispatchQueue.main.async {
                     completion(.success(albums))
+                    print("Load data \(self.counter)")
+                    self.counter += 1
                 }
-                print("Load data \(self.counter)")
-                self.counter += 1
             } catch {
                 print("Decoding error: \(error.localizedDescription)")
                 DispatchQueue.main.async {
