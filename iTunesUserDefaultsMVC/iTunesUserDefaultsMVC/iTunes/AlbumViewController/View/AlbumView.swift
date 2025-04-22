@@ -14,6 +14,7 @@ final class AlbumView: UIView {
         image.layer.cornerRadius = 15
         image.clipsToBounds = true
         image.contentMode = .scaleToFill
+        image.accessibilityIdentifier = "albumImageView"
         return image
     }()
 
@@ -22,6 +23,7 @@ final class AlbumView: UIView {
         label.font = UIFont.boldSystemFont(ofSize: 20)
         label.numberOfLines = 3
         label.textAlignment = .center
+        label.accessibilityIdentifier = "albumNameLabel"
         return label
     }()
 
@@ -29,6 +31,7 @@ final class AlbumView: UIView {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 18)
         label.textColor = .systemGray
+        label.accessibilityIdentifier = "artistNameLabel"
         return label
     }()
 
@@ -36,6 +39,7 @@ final class AlbumView: UIView {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 18)
         label.textColor = .systemOrange
+        label.accessibilityIdentifier = "collectionPriceLabel"
         return label
     }()
 

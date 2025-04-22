@@ -11,7 +11,7 @@ import UIKit
 final class SearchAssembly {
     func createModule() -> UIViewController {
         let storageManager = StorageManager()
-        let itunesService = ItunesService()
+        let itunesService = ITunesService()
         let imageLoader = ImageLoader(storageManager: storageManager)
 
         let collectionViewDataSource = SearchCollectionViewDataSource(imageLoader: imageLoader)

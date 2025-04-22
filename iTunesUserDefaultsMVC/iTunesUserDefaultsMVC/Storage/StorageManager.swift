@@ -6,9 +6,8 @@
 //
 
 import Foundation
-import UIKit
 
-final class StorageManager {
+final class StorageManager: StorageManagerProtocol {
     private let historyKey = "searchHistory"
 
     func saveAlbums(_ albums: [Album], for searchTerm: String) {
@@ -17,18 +16,6 @@ final class StorageManager {
             UserDefaults.standard.set(data, forKey: searchTerm)
         } catch {
             print("Failed to encode characters: \(error)")
-        }
-    }
-
-    func saveImage(_ image: Data, key: String) {
-        UserDefaults.standard.set(image, forKey: key)
-    }
-
-    func saveSearchTerm(_ term: String) {
-        var history = getSearchHistory()
-        if !history.contains(term) {
-            history.insert(term, at: 0)
-            UserDefaults.standard.set(history, forKey: historyKey)
         }
     }
 
@@ -41,27 +28,23 @@ final class StorageManager {
         return albums
     }
 
+    func saveImage(_ image: Data, key: String) {
+        UserDefaults.standard.set(image, forKey: key)
+    }
+
     func loadImage(key: String) -> Data? {
         return UserDefaults.standard.data(forKey: key)
     }
 
+    func saveSearchTerm(_ term: String) {
+        var history = getSearchHistory()
+        if !history.contains(term) {
+            history.insert(term, at: 0)
+            UserDefaults.standard.set(history, forKey: historyKey)
+        }
+    }
+
     func getSearchHistory() -> [String] {
         return UserDefaults.standard.array(forKey: historyKey) as? [String] ?? []
-    }
-
-    func clearAlbums() {
-        let history = getSearchHistory()
-        for term in history {
-            UserDefaults.standard.removeObject(forKey: term)
-        }
-        clearHistory()
-    }
-
-    func clearImage(key: String) {
-        UserDefaults.standard.removeObject(forKey: key)
-    }
-
-    func clearHistory() {
-        UserDefaults.standard.removeObject(forKey: historyKey)
     }
 }

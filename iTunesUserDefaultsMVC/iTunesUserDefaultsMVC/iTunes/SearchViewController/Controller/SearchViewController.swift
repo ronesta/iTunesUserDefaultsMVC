@@ -16,13 +16,13 @@ final class SearchViewController: UIViewController {
         return view
     }()
 
-    private let itunesService: ItunesService
-    private let storageManager: StorageManager
-    private let collectionViewDataSource: SearchCollectionViewDataSource
+    private let itunesService: ITunesServiceProtocol
+    private let storageManager: StorageManagerProtocol
+    private let collectionViewDataSource: SearchDataSourceProtocol
 
-    init(itunesService: ItunesService,
-         storageManager: StorageManager,
-         collectionViewDataSource: SearchCollectionViewDataSource) {
+    init(itunesService: ITunesServiceProtocol,
+         storageManager: StorageManagerProtocol,
+         collectionViewDataSource: SearchDataSourceProtocol) {
         self.itunesService = itunesService
         self.storageManager = storageManager
         self.collectionViewDataSource = collectionViewDataSource
@@ -77,6 +77,9 @@ final class SearchViewController: UIViewController {
                 self?.storageManager.saveAlbums(albums, for: term)
                 print("Successfully loaded \(albums.count) albums.")
             case .failure(let error):
+                let alert = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "OK", style: .default))
+                self?.present(alert, animated: true)
                 print("Failed to load images with error: \(error.localizedDescription)")
             }
         }

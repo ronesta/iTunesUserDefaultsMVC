@@ -12,6 +12,7 @@ final class SearchHistoryView: UIView {
     let tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .grouped)
         tableView.separatorStyle = .singleLine
+        tableView.accessibilityIdentifier = "searchHistoryTableView"
         return tableView
     }()
 

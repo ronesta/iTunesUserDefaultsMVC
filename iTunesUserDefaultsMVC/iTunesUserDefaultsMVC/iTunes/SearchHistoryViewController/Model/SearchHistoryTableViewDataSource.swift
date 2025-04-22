@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-final class SearchHistoryTableViewDataSource: NSObject, UITableViewDataSource {
+final class SearchHistoryTableViewDataSource: NSObject, SearchHistoryDataSourceProtocol {
     var searchHistory = [String]()
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -16,7 +16,7 @@ final class SearchHistoryTableViewDataSource: NSObject, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: SearchHistoryView.id, for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         cell.textLabel?.text = searchHistory[indexPath.row]
         return cell
     }

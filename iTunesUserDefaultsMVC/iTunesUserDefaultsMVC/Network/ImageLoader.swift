@@ -8,12 +8,12 @@
 import Foundation
 import UIKit.UIImage
 
-final class ImageLoader {
+final class ImageLoader: ImageLoaderProtocol {
     private var counter = 1
 
-    private let storageManager: StorageManager
+    private let storageManager: StorageManagerProtocol
 
-    init(storageManager: StorageManager) {
+    init(storageManager: StorageManagerProtocol) {
         self.storageManager = storageManager
     }
 

@@ -8,12 +8,12 @@
 import Foundation
 import UIKit
 
-final class SearchCollectionViewDataSource: NSObject, UICollectionViewDataSource {
-    private let imageLoader: ImageLoader
-
+final class SearchCollectionViewDataSource: NSObject, SearchDataSourceProtocol {
     var albums = [Album]()
 
-    init(imageLoader: ImageLoader) {
+    private let imageLoader: ImageLoaderProtocol
+
+    init(imageLoader: ImageLoaderProtocol) {
         self.imageLoader = imageLoader
     }
 
@@ -22,7 +22,8 @@ final class SearchCollectionViewDataSource: NSObject, UICollectionViewDataSource
     }
 
     func collectionView(_ collectionView: UICollectionView,
-                        cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+                        cellForItemAt indexPath: IndexPath
+    ) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(
             withReuseIdentifier: AlbumCollectionViewCell.id,
             for: indexPath)
@@ -31,16 +32,17 @@ final class SearchCollectionViewDataSource: NSObject, UICollectionViewDataSource
         }
 
         let album = albums[indexPath.item]
-        let urlString = album.artworkUrl100
 
-        imageLoader.loadImage(from: urlString) { loadedImage in
+        imageLoader.loadImage(from: album.artworkUrl100) { image in
             DispatchQueue.main.async {
-                guard let cell = collectionView.cellForItem(at: indexPath) as? AlbumCollectionViewCell  else {
+                guard let currentCell = collectionView.cellForItem(at: indexPath) as? AlbumCollectionViewCell else {
                     return
                 }
-                cell.configure(with: album, image: loadedImage)
+
+                currentCell.configure(with: album, image: image)
             }
         }
+
         return cell
     }
 }

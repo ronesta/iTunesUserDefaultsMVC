@@ -8,17 +8,17 @@
 import UIKit
 
 final class SearchHistoryViewController: UIViewController {
-    private lazy var searchHistoryView: SearchHistoryView = {
+    lazy var searchHistoryView: SearchHistoryView = {
         let view = SearchHistoryView(frame: .zero)
         view.tableView.dataSource = tableViewDataSource
         return view
     }()
 
-    private let storageManager: StorageManager
-    private let tableViewDataSource: SearchHistoryTableViewDataSource
+    private let storageManager: StorageManagerProtocol
+    private let tableViewDataSource: SearchHistoryDataSourceProtocol
 
-    init(storageManager: StorageManager,
-         tableViewDataSource: SearchHistoryTableViewDataSource) {
+    init(storageManager: StorageManagerProtocol,
+         tableViewDataSource: SearchHistoryDataSourceProtocol) {
         self.storageManager = storageManager
         self.tableViewDataSource = tableViewDataSource
         super.init(nibName: nil, bundle: nil)

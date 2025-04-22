@@ -7,7 +7,7 @@
 
 import Foundation
 
-final class ItunesService {
+final class ITunesService: ITunesServiceProtocol {
     private var counter = 1
 
     func loadAlbums(albumName: String, completion: @escaping (Result<[Album], Error>) -> Void) {
