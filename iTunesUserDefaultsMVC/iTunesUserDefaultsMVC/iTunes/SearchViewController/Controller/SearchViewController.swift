@@ -77,12 +77,16 @@ final class SearchViewController: UIViewController {
                 self?.storageManager.saveAlbums(albums, for: term)
                 print("Successfully loaded \(albums.count) albums.")
             case .failure(let error):
-                let alert = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "OK", style: .default))
-                self?.present(alert, animated: true)
+                self?.showError(error.localizedDescription)
                 print("Failed to load images with error: \(error.localizedDescription)")
             }
         }
+    }
+
+    func showError(_ message: String) {
+        let alert = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default))
+        present(alert, animated: true)
     }
 
     private func displayAlbumDetails() {
@@ -92,7 +96,6 @@ final class SearchViewController: UIViewController {
             }
 
             let albumAssembly = AlbumAssembly()
-
             let albumViewController = albumAssembly.createModule(with: album)
 
             self?.navigationController?.pushViewController(albumViewController, animated: true)

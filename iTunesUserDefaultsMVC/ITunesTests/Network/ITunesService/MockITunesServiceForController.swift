@@ -8,7 +8,7 @@
 import Foundation
 @testable import iTunesUserDefaultsMVC
 
-final class MockITunesServiceForPresenter: ITunesServiceProtocol {
+final class MockITunesServiceForController: ITunesServiceProtocol {
     private(set) var shouldReturnError = false
     private(set) var albumName: String?
     var albums = [Album]()
