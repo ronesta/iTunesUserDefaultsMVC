@@ -27,16 +27,16 @@ final class SearchViewTests: XCTestCase {
         XCTAssertTrue(searchView.collectionView.delegate === searchView)
     }
 
-    func testOnSelectInvokedOnDidSelect() {
+    func testDidSelectItemCallsOnSelectClosure() {
         let indexPath = IndexPath(item: 1, section: 0)
-        var capturedIndexPath: IndexPath?
+        var calledIndexPath: IndexPath?
 
         searchView.onSelect = { path in
-            capturedIndexPath = path
+            calledIndexPath = path
         }
 
         searchView.collectionView(searchView.collectionView, didSelectItemAt: indexPath)
 
-        XCTAssertEqual(capturedIndexPath, indexPath)
+        XCTAssertEqual(calledIndexPath, indexPath)
     }
 }
