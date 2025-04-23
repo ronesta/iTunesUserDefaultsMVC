@@ -10,12 +10,12 @@ import UIKit
 import SnapKit
 
 final class AlbumViewController: UIViewController {
-    private let imageLoader: ImageLoader
+    private let imageLoader: ImageLoaderProtocol
     private let album: Album
 
     private let albumView = AlbumView(frame: .zero)
 
-    init(album: Album, imageLoader: ImageLoader) {
+    init(album: Album, imageLoader: ImageLoaderProtocol) {
         self.album = album
         self.imageLoader = imageLoader
         super.init(nibName: nil, bundle: nil)
